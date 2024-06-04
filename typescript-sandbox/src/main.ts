@@ -3,11 +3,6 @@ import "./style.css";
 // VARIABLES DE ALMACENAMIENTO
 let totalPoints: number = 0;
 
-// ELEMENTOS DEL DOM
-const score = document.getElementById("score");
-const giveCardBtn = document.getElementById("give-card-btn");
-
-
 // FUNCIONES
 
 /* scoreDisplay muestra la puntuación del jugador */
@@ -82,16 +77,16 @@ const drawCard = (playedCard : HTMLImageElement) => {
     }
 }
 
+/* Determina el valor de la carta */
 const getCardValue = (randomCard: number) => {
   return randomCard > 7 ? 0.5 : randomCard;
 }
 
+/* Devuelve el valor de la carta */
 const getPoints = (randomCard : number) => {
   const value = getCardValue(randomCard);
   return totalPoints = totalPoints + value;
 }
-
-
 
 /* playGame inicia el juego */
 const playGame = () => {
@@ -107,12 +102,27 @@ const playGame = () => {
   console.log(getScore)
 }
 
-// ASIGNACIÓN DE FUNCIONES A LOS ELEMENTOS
-if (score instanceof HTMLHeadingElement) {
-  document.addEventListener("DOMContentLoaded", () => scoreDisplay());
+/* Simplemente recarga la página */
+const restartGame = () => {
+  location.reload();
 }
 
-if (giveCardBtn instanceof HTMLButtonElement
+// ELEMENTOS DEL DOM
+const score = document.getElementById("score");
+const giveCardBtn = document.getElementById("play-btn");
+const restartGameBtn = document.getElementById("restart-btn");
+
+// ASIGNACIÓN DE FUNCIONES A LOS ELEMENTOS
+if(score instanceof HTMLHeadingElement) {
+  score.addEventListener("DOMContentLoaded", () => scoreDisplay());
+}
+
+if(giveCardBtn instanceof HTMLButtonElement
   && giveCardBtn !== null && giveCardBtn !== undefined) {
-  document.addEventListener("click", playGame)
+  giveCardBtn.addEventListener("click", playGame);
+}
+  
+if(restartGameBtn instanceof HTMLButtonElement
+  && restartGameBtn !== null && restartGameBtn !== undefined) {
+  restartGameBtn.addEventListener("click", restartGame);
   }
