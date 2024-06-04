@@ -35,30 +35,49 @@ font-size: var(--font-size-title);
   font-size: var(--font-size-score-points);
   }
 
-  .give-card-btn{
-    width: 180px;
-    height: 36px;
-    border-radius: 20px;
-    margin: 0 10px;
-    color: var(--font-color);
-    font-size: 18px;
-    font-weight: 500;
-    background-color: transparent;
-    cursor: pointer;
-  }
+.give-card-btn{
+  width: 180px;
+  height: 36px;
+  border-radius: 20px;
+  margin: 0 10px;
+  color: var(--font-color);
+  font-size: 18px;
+  font-weight: 500;
+  background-color: transparent;
+  cursor: pointer;
+}
 
-  .give-card-btn:hover{
-    background-color: aliceblue;
-    color: black
-  }
+.give-card-btn:hover{
+  background-color: aliceblue;
+  color: black
+}
 
-  .game-board{
-    display: flex;
-    justify-content: center;
-    margin-top: 40px;
-  }
+.game-board{
+  display: flex;
+  margin: 40px auto 0 auto;
+  flex-direction: row;
+  width: 60%;
+}
 
-  .card {
-    border-radius: 20px;
-    margin: 0 40px;
-  }
+.card-board{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.played-board{
+  display: flex;
+  justify-content: left;
+  width: 100%;
+}
+
+.card {
+  border-radius: 20px;
+  margin: 0 40px;
+}
+
+.played-card {
+  border-radius: 20px;
+  margin-right: -170px;
+  transform: rotate(10deg);
+}
