@@ -1,44 +1,64 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+:root{
+  --font-size-title: 46px;
+  --font-size-score-text: 24px;
+  --font-size-score-points: 30px;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+  --font-color: rgba(187, 230, 0, 1);
 }
 
 body {
+  box-sizing: border-box;
   margin: 0;
+  padding: 0;
+  background-image: url("/src/fondo.jpg");
+  font-family: "Arvo", sans-serif;
+  color: var(--font-color);
+}
+
+.header-module{
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  justify-content: center;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.header-title{
+font-size: var(--font-size-title);
 }
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.score-text {
+  font-size: var(--font-size-score-text);
+  margin-top: -60px;
 }
+
+.score-points{
+  color:white;
+  padding: 0 20px;
+  font-size: var(--font-size-score-points);
+  }
+
+  .give-card-btn{
+    width: 180px;
+    height: 36px;
+    border-radius: 20px;
+    margin: 0 10px;
+    color: var(--font-color);
+    font-size: 18px;
+    font-weight: 500;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  .give-card-btn:hover{
+    background-color: aliceblue;
+    color: black
+  }
+
+  .game-board{
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+  }
+
+  .card {
+    border-radius: 20px;
+    margin: 0 40px;
+  }
