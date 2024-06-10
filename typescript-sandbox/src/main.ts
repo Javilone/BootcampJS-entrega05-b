@@ -11,7 +11,7 @@ let totalPoints: number = 0;
 
 // FUNCIONES
 
-/* scoreDisplay muestra la puntuación del jugador */
+/* Muestra la puntuación del jugador */
 const scoreDisplay = () : void => {
   if (score instanceof HTMLHeadingElement
     && score !== null && score !== undefined) {
@@ -19,8 +19,18 @@ const scoreDisplay = () : void => {
   }
 }
 
+/* Genera un número aleatorio */
+const getRandomNumber = () : number => {
+  return Math.ceil(Math.random() * 10);
+
+}
+ /* Obtiene la carta aleatoria (no su valor aun) */
+const getCard = (randomNumber: number) : number => { 
+  return randomNumber > 7 ? randomNumber + 2 : randomNumber;
+}
+
 /* Listado de las cartas de juego */
-const getACard = (card : number) => {
+const cardList = (card : number) => {
   let cardUrl = "";
   switch (card) {
       case 1:
@@ -57,25 +67,18 @@ const getACard = (card : number) => {
   return cardUrl;
 };
 
-/* getRandomCard genera un número aleatorio */
-const getRandomNumber = () : number => {
-  return Math.ceil(Math.random() * 10);
-
-}
- /* getRandomCard obtiene la carta aleatoria */
-const getRandomCard = (randomNumber: number) : number => { 
-  return randomNumber > 7 ? randomNumber + 2 : randomNumber;
-}
-
-/* createCard genera la carta con su clase */
+/* Genera la carta con su clase. NO la pinta aun */
 const createCard = (cardUrl : string) : HTMLImageElement => {
   const playedCard = document.createElement("img");
-  playedCard.src = cardUrl;
-  playedCard.className = ("played-card");
+  if (playedCard instanceof HTMLImageElement 
+    && playedCard !== null && playedCard !== undefined){
+    playedCard.src = cardUrl;
+    playedCard.className = ("played-card");
+  }
   return playedCard
 }
 
-/* drawCard pinta la carta en el contenedor padre */
+/* Pinta la carta en el contenedor padre */
 const drawCard = (playedCard : HTMLImageElement) : void => {
   const gameBoard = document.getElementById("played-board");
   if (gameBoard instanceof HTMLDivElement
@@ -85,14 +88,13 @@ const drawCard = (playedCard : HTMLImageElement) : void => {
 }
 
 /* Determina el valor de la carta */
-const getCardValue = (randomCard: number) : number => {
-  return randomCard > 7 ? 0.5 : randomCard;
+const getCardValue = (card: number) : number => {
+  return card > 7 ? 0.5 : card;
 }
 
 /* Obtiene el valor de la carta */
-const getPoints = (randomCard : number) : number => {
-  const value : number = getCardValue(randomCard);
-  return totalPoints + value;
+const sumPoints = (cardValue : number) : number => {
+  return totalPoints + cardValue;
 }
 
 /* Establece el valor de la carta en la variable totalPoints */
@@ -100,13 +102,6 @@ const setPoints = (getPoints : number) : void =>  {
   totalPoints = getPoints;
 }
 
-/* Actualiza el heading element del html con la puntuación */
-const updateScore = (totalPoints : string) : void => {
-  if (score instanceof HTMLHeadingElement
-    && score !== undefined && score !== null) {
-    score.innerHTML = totalPoints.toString();
-  }
-}
 
 /* Determina el estado de la partida según la puntuación */
 const gameStatus = () : string => {
@@ -124,6 +119,14 @@ const gameStatus = () : string => {
     statusMessage = totalPoints.toString();
   }
   return statusMessage;
+}
+
+/* Actualiza el heading element del html con la puntuación */
+const updateScore = (totalPoints : string) : void => {
+  if (score instanceof HTMLHeadingElement
+    && score !== undefined && score !== null) {
+    score.innerHTML = totalPoints.toString();
+  }
 }
 
 /* Deshabilita el botón de Pedir Carta */
@@ -175,43 +178,44 @@ const oneMoreTimeButton = () : void => {
   const oneMore = document.getElementById("one-more");
   if (oneMore instanceof HTMLButtonElement
     && oneMore !== null && oneMore !== undefined){
-    oneMore.addEventListener("click", getOneMoreTime);
+    oneMore.addEventListener("click", getOneMoreTime); // Habilita el botón de generar una carta más en el panel emergente de plantarse
   }
 }
 
 /* Arranca el proceso de jugar una carta más */
 const getOneMoreTime = () : void => {
   const randomNumber : number = getRandomNumber();
-  const randomCard : number = getRandomCard(randomNumber);
-  const cardUrl: string = getACard(randomCard);
-  const value : number = getCardValue(randomCard)
-  const playedCard : HTMLImageElement= createCard(cardUrl);
+  const card : number = getCard(randomNumber);
+  const cardUrl: string = cardList(card);
+  const cardValue : number = getCardValue(card)
+  const playedCard : HTMLImageElement = createCard(cardUrl);
   drawCard(playedCard);
 
-  let gameStatus = `Pues que habrías sacado un ${value}.<br>Y en total tendrías ${totalPoints + value} puntos`;
+  let gameStatus = `Pues que habrías sacado un ${cardValue}.<br>Y en total tendrías ${totalPoints + cardValue} puntos`;
   setGiveUpStatus(gameStatus);
 }
 
 /* Inicia el proceso de plantar la partida */
 const giveUp = () : void => {
-  const gameStatus : string = getGiveUpStatus()
-  setGiveUpStatus(gameStatus);
+  const gameStatus : string = getGiveUpStatus() // Obtengo el mensaje de estado de la partida en base a los puntos
+  setGiveUpStatus(gameStatus); // Abro panel emergente mostrando el mensaje de estado de la partida
   giveCardButtonOff();
 }
 
-/* playGame arranca el juego */
+/* Arranca el juego */
 const playGame = () : void => {
-  const randomNumber : number = getRandomNumber();
-  const randomCard : number = getRandomCard(randomNumber);
-  const cardUrl : string  = getACard(randomCard);
-  const playedCard : HTMLImageElement = createCard(cardUrl);
-  drawCard(playedCard);
+  const randomNumber : number = getRandomNumber(); // Obtengo un número aleatorio
+  const card : number = getCard(randomNumber); // Obtengo el número de la carta según el número aleatorio (no su valor) 
+  const cardUrl : string  = cardList(card); // Busco la url de la carta
+  const playedCard : HTMLImageElement = createCard(cardUrl); // Creo la carta pero no la pinto aun
+  drawCard(playedCard); // Pinto la carta en el contenedor padre
 
-  const getScore : number = getPoints(randomCard);
-  setPoints(getScore);
+  const cardValue : number = getCardValue(card); // Obtengo el valor en puntos de la carta
+  const sumScore: number = sumPoints(cardValue); // Obtengo la suma de los puntos totales + lo que vale la carta
+  setPoints(sumScore); // Establezco los puntos totales
 
-  const statusMessage : string = gameStatus();
-  updateScore(statusMessage);
+  const statusMessage : string = gameStatus(); // Verifico el estado del juego obteniendo un mensaje de victoria, gameover o los puntos
+  updateScore(statusMessage); // Actualizo la puntuación
 }
 
 /* Recarga la página */
